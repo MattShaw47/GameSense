@@ -17,6 +17,26 @@ public class GameSenseConfigScreen {
                 .setSavingRunnable(config::save);
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+
+        // Render Tracker
+        ConfigCategory renderTracker = builder.getOrCreateCategory(Text.of("Render Tracker"));
+
+        renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Notify on render"), config.notifyRender)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.notifyRender = newValue)
+                .build());
+
+        renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Notify on de-render"), config.notifyDerender)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.notifyDerender = newValue)
+                .build());
+
+        renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Highlight rendered in tablist"), config.tablistHighlight)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.tablistHighlight = newValue)
+                .build());
+
+
         ConfigCategory general = builder.getOrCreateCategory(Text.of("General"));
 
         general.addEntry(entryBuilder.startBooleanToggle(Text.of("Highlight Low Hp"), config.highlightLowHP)

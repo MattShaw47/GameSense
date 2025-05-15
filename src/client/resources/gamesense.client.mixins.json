@@ -3,7 +3,8 @@
 	"package": "com.lemon.mixin.client",
 	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"ExampleClientMixin"
+		"ExampleClientMixin",
+		"PlayerListEntryMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameSenseConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -13,6 +15,16 @@ public class GameSenseConfig {
 
     public boolean highlightLowHP = true;
     public boolean showPotionUse = true;
+
+    // Render / de-render settings
+    public boolean notifyRender = true;
+    public boolean notifyDerender = true;
+    public boolean tablistHighlight = true;
+
+    // Change so that blacklist is the only option.
+    public List<String> renderWhitelist = new ArrayList<>();
+    public List<String> renderBlacklist = new ArrayList<>();
+
 
     public static GameSenseConfig INSTANCE = load();
 
