@@ -4,11 +4,13 @@ import net.minecraft.client.gui.screen.Screen;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.InvalidIdentifierException;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameSenseConfigScreen {
@@ -64,7 +66,6 @@ public class GameSenseConfigScreen {
         lowHPNotifier.addEntry(entryBuilder.startEnumSelector(Text.of("Low HP message color."), ColorFormatting.class, config.lowHpFormatting)
                 .setDefaultValue(ColorFormatting.RED)
                 .setDefaultValue(ColorFormatting.RED)
-                .setTooltip(Text.of("Also affects the color of the on screen popup."))
                 .setSaveConsumer(newValue -> {config.lowHpFormatting = newValue;})
                 .setEnumNameProvider(c -> {
                     ColorFormatting color = (ColorFormatting) c;
@@ -77,6 +78,55 @@ public class GameSenseConfigScreen {
                 .setSaveConsumer(newValue -> config.lowHPIncludeSelf = newValue)
                 .build());
 
+        // Potion Tracker
+        ConfigCategory potionTracker = builder.getOrCreateCategory(Text.of("Potion Use Tracker"));
+
+        potionTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Potion Use Tracker"), config.potionNotifier)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.potionNotifier = newValue)
+                .build());
+
+        potionTracker.addEntry(entryBuilder.startStrField(Text.of("Tracked effects (comma-seperated)"),
+                        String.join(", ", config.trackedEffects))
+                .setDefaultValue("resistance")
+                .setTooltip(Text.of("Technically tracks effects not potions."))
+                .setTooltip(Text.of("Technically tracks effects not potions.\nSo turtle_master won't work, use resistance instead"))
+                .setSaveConsumer(input -> {
+                    config.trackedEffects = Arrays.stream(input.split(","))
+                            .map(String::trim)
+                            .map(s -> s.toLowerCase(Locale.ROOT))
+                            .filter(s -> !s.isEmpty())
+                            .collect(Collectors.toList());
+                })
+                .setErrorSupplier((currentInput) -> {
+                    List<String> invalid = Arrays.stream(currentInput.split(","))
+                            .map(String::trim)
+                            .filter(s -> !s.isEmpty())
+                            .filter(s -> {
+                                try {
+                                    return Registries.STATUS_EFFECT.get(Identifier.of("minecraft", s)) == null;
+                                } catch (InvalidIdentifierException e) {
+                                    return true;
+                                }
+                            })
+                            .toList();
+
+                    if (!invalid.isEmpty()) {
+                        return Optional.of(Text.of("Invalid effect(s): " + String.join(", ", invalid)));
+                    }
+                    return Optional.empty();
+                })
+                .build());
+
+        potionTracker.addEntry(entryBuilder.startEnumSelector(Text.of("Potion detected color."), ColorFormatting.class, config.potionFormatting)
+                .setDefaultValue(ColorFormatting.RED)
+                .setDefaultValue(ColorFormatting.RED)
+                .setSaveConsumer(newValue -> {config.potionFormatting = newValue;})
+                .setEnumNameProvider(c -> {
+                    ColorFormatting color = (ColorFormatting) c;
+                    return Text.literal(color.toString()).styled(s -> s.withColor(color.mcFormat));
+                })
+                .build());
 
         // Render Tracker
         ConfigCategory renderTracker = builder.getOrCreateCategory(Text.of("Render Tracker"));

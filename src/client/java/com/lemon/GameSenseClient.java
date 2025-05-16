@@ -2,9 +2,9 @@ package com.lemon;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
-import net.minecraft.entity.EntityType;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +15,9 @@ public class GameSenseClient implements ClientModInitializer {
 
 	private static final String MOD_ID = "gamesense";
 
+	public static final Text PREFIX = Text.literal("[GS] ")
+			.styled(style -> style.withColor(Formatting.GRAY));
+
 	static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	// Milliseconds between each assumed server tick.
@@ -22,8 +25,12 @@ public class GameSenseClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
+		LOGGER.info("Initializing {}", MOD_ID);
+		
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			RenderTracker.tick(client);
+
+			PotionUseDetector.checkPotions(client);
 
 			long now = Util.getMeasuringTimeMs();
 

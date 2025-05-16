@@ -2,9 +2,11 @@ package com.lemon;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
 import net.minecraft.text.Text;
+import org.spongepowered.asm.mixin.Mutable;
 
 
 import java.util.HashSet;
@@ -59,9 +61,9 @@ public class LowHPNotifier {
 
         MinecraftClient client = MinecraftClient.getInstance();
 
-        Text msg = Text.literal("[GS] " + player.getDisplayName().getString() + " is low HP!")
+        MutableText msg = Text.literal(player.getDisplayName().getString() + " is low HP!")
                 .styled(style -> style.withColor(GameSenseConfig.INSTANCE.lowHpFormatting.mcFormat));
 
-        client.player.sendMessage(msg, false);
+        client.player.sendMessage(GameSenseClient.PREFIX.copy().append(msg), false);
     }
 }

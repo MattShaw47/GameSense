@@ -31,6 +31,11 @@ public class GameSenseConfig {
     public ColorFormatting lowHpFormatting = ColorFormatting.RED;
     public boolean lowHPIncludeSelf = false;
 
+    // Potion Notifier settings
+    public boolean potionNotifier = true;
+    public List<String> trackedEffects = new ArrayList<>(List.of("turtle_master"));
+    public ColorFormatting potionFormatting = ColorFormatting.RED;
+
 
     public static GameSenseConfig INSTANCE = load();
 
