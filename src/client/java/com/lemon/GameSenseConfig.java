@@ -21,8 +21,6 @@ public class GameSenseConfig {
     public boolean notifyDerender = true;
     public boolean tablistHighlight = true;
 
-    // Change so that blacklist is the only option.
-    public List<String> renderWhitelist = new ArrayList<>();
     public List<String> renderBlacklist = new ArrayList<>();
 
 

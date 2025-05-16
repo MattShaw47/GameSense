@@ -51,8 +51,6 @@ public class RenderTracker {
 
         if (!cfg.renderBlacklist.isEmpty() && cfg.renderBlacklist.contains(name)) return;
 
-        if (!cfg.renderWhitelist.isEmpty() && !cfg.renderWhitelist.contains(name)) return;
-
         client.player.sendMessage(Text.of("[GS] " + name + " entered render distance."), false);
     }
 
@@ -66,8 +64,6 @@ public class RenderTracker {
         if (!cfg.notifyDerender) return;
 
         if (!cfg.renderBlacklist.isEmpty() && cfg.renderBlacklist.contains(name)) return;
-
-        if (!cfg.renderWhitelist.isEmpty() && !cfg.renderWhitelist.contains(name)) return;
 
         client.player.sendMessage(Text.of("[GS] " + name + " left render distance."), false);
 

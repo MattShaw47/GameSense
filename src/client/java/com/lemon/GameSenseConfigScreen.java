@@ -7,6 +7,9 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class GameSenseConfigScreen {
     public static Screen create(Screen parent) {
         GameSenseConfig config = GameSenseConfig.INSTANCE;
@@ -23,18 +26,32 @@ public class GameSenseConfigScreen {
 
         renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Notify on render"), config.notifyRender)
                 .setDefaultValue(true)
+                .setTooltip(Text.of("Sends a chat message when a player enters render distance."))
                 .setSaveConsumer(newValue -> config.notifyRender = newValue)
                 .build());
 
         renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Notify on de-render"), config.notifyDerender)
                 .setDefaultValue(true)
+                .setTooltip(Text.of("Sends a chat message when a player leaves render distance."))
                 .setSaveConsumer(newValue -> config.notifyDerender = newValue)
                 .build());
 
         renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Highlight rendered in tablist"), config.tablistHighlight)
                 .setDefaultValue(true)
+                .setTooltip(Text.of("Displays an icon in tablist next to players who are within render distance."))
                 .setSaveConsumer(newValue -> config.tablistHighlight = newValue)
                 .build());
+
+        renderTracker.addEntry(entryBuilder.startStrField(Text.of("Blacklist (comma-seperated)"),
+                String.join(", ", config.renderBlacklist))
+                .setDefaultValue("")
+                .setTooltip(Text.of("Ignore notifications for these players."))
+                .setSaveConsumer(input -> {
+                    config.renderBlacklist = Arrays.stream(input.split(","))
+                            .map(String::trim)
+                            .filter(s -> !s.isEmpty())
+                            .collect(Collectors.toList());
+                }).build());
 
 
         ConfigCategory general = builder.getOrCreateCategory(Text.of("General"));
