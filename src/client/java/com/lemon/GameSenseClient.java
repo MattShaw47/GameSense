@@ -26,17 +26,24 @@ public class GameSenseClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		LOGGER.info("Initializing {}", MOD_ID);
-		
+
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			RenderTracker.tick(client);
 
 			PotionUseDetector.checkPotions(client);
+
+			ArmorSwapNotifier.checkArmor(client);
 
 			long now = Util.getMeasuringTimeMs();
 
 			if (now - accumMS > SERVER_TICK_INTERVAL) {
 					accumMS = now;
 					LowHPNotifier.checkHP(client);
+			}
+
+			// runs every 1,000 server tick intervals (Assuming 20 tps (default), every 50 seconds)
+			if (now - accumMS > SERVER_TICK_INTERVAL * 1000) {
+				ArmorSwapNotifier.clearCache();
 			}
 		});
 	}

@@ -2,6 +2,9 @@ package com.lemon;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.scoreboard.AbstractTeam;
+import net.minecraft.scoreboard.Scoreboard;
+import net.minecraft.scoreboard.Team;
 import net.minecraft.text.MutableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
@@ -32,7 +35,9 @@ public class LowHPNotifier {
                 lowHPPlayers.add(uuid);
                 sendAlert(player);
 
-                if (config.lowHPTag) player.setGlowing(true);
+                if (config.lowHPTag) {
+                    player.setGlowing(true);
+                }
 
                 if (config.lowHPHighlight) {
                     if (!player.isCustomNameVisible()) {

@@ -33,8 +33,14 @@ public class GameSenseConfig {
 
     // Potion Notifier settings
     public boolean potionNotifier = true;
-    public List<String> trackedEffects = new ArrayList<>(List.of("turtle_master"));
+    public List<String> trackedEffects = new ArrayList<>(List.of("resistance"));
     public ColorFormatting potionFormatting = ColorFormatting.RED;
+
+    // Armor Swap Notifier settings
+    public boolean armorNotifier = true;
+    public int armorThreshold = 8; // 0 = all changes reported
+    public boolean armorIncludeSelf;
+    public ColorFormatting armorFormatting = ColorFormatting.RED;
 
 
     public static GameSenseConfig INSTANCE = load();

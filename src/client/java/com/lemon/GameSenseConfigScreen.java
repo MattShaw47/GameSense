@@ -160,6 +160,35 @@ public class GameSenseConfigScreen {
                             .collect(Collectors.toList());
                 }).build());
 
+        // Armor Swap Notifier
+        ConfigCategory armorTracker = builder.getOrCreateCategory(Text.of("Armor Swap Notifier"));
+
+        armorTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Notify on armor swap"), config.armorNotifier)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.armorNotifier = newValue)
+                .build());
+
+        armorTracker.addEntry(entryBuilder.startIntField(Text.of("Armor change threshold"), config.armorThreshold)
+                .setDefaultValue(0)
+                .setTooltip(Text.of("Range from 0 to 20. 0 will report any armor change.\nNon-zero values report armor changes of at least x.\nTo detect elytra swaps with netherite, use 8."))
+                .setSaveConsumer(newValue -> config.armorThreshold = newValue)
+                .build());
+
+        armorTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Include self"), config.armorIncludeSelf)
+                .setDefaultValue(true)
+                .setSaveConsumer(newValue -> config.armorIncludeSelf = newValue)
+                .build());
+
+        armorTracker.addEntry(entryBuilder.startEnumSelector(Text.of("Armor change notification color."), ColorFormatting.class, config.armorFormatting)
+                .setDefaultValue(ColorFormatting.RED)
+                .setDefaultValue(ColorFormatting.RED)
+                .setSaveConsumer(newValue -> {config.armorFormatting = newValue;})
+                .setEnumNameProvider(c -> {
+                    ColorFormatting color = (ColorFormatting) c;
+                    return Text.literal(color.toString()).styled(s -> s.withColor(color.mcFormat));
+                })
+                .build());
+
         return builder.build();
     }
 
