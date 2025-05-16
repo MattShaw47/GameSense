@@ -1,17 +1,17 @@
 {
 	"schemaVersion": 1,
 	"id": "gamesense",
-	"version": "${version}",
+	"version": "1.0.0",
 	"name": "GameSense",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Contains a variety of modules intended to improve awareness in pvp.",
 	"authors": [
-		"Me!"
+		"YellowLemqn"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/MattShaw47/GameSense",
+		"sources": "https://github.com/MattShaw47/GameSense"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/gamesense/icon.png",
 	"environment": "*",
 	"entrypoints": {
