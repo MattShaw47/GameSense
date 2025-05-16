@@ -27,7 +27,6 @@ public class GameSenseConfig {
     public float lowHPThreshold = 6.0f;
     public boolean lowHPTag = true;
     public boolean lowHPHighlight = true;
-    public boolean lowHPOnscreenPopup = true;
     public boolean lowHPMessage = true;
     public ColorFormatting lowHpFormatting = ColorFormatting.RED;
     public boolean lowHPIncludeSelf = false;

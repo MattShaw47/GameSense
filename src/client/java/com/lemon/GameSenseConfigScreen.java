@@ -56,11 +56,6 @@ public class GameSenseConfigScreen {
                 .setSaveConsumer(newValue -> config.lowHPThreshold = newValue)
                 .build());
 
-        lowHPNotifier.addEntry(entryBuilder.startBooleanToggle(Text.of("Onscreen low hp popup."), config.lowHPOnscreenPopup)
-                .setDefaultValue(true)
-                .setSaveConsumer(newValue -> config.lowHPOnscreenPopup = newValue)
-                .build());
-
         lowHPNotifier.addEntry(entryBuilder.startBooleanToggle(Text.of("Send low HP message."), config.lowHPMessage)
                 .setDefaultValue(true)
                 .setSaveConsumer(newValue -> config.lowHPMessage = newValue)
