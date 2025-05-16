@@ -2,7 +2,6 @@ package com.lemon;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.minecraft.util.Formatting;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,10 +16,11 @@ public class GameSenseConfig {
     public boolean showPotionUse = true;
 
     // Render / de-render settings
-    public boolean notifyRender = true;
-    public boolean notifyDerender = true;
+    public boolean renderNotify = true;
+    public boolean renderLeaveNotify = true;
     public boolean tablistHighlight = true;
     public List<String> renderBlacklist = new ArrayList<>();
+    public ColorFormatting renderFormatting = ColorFormatting.RED;
 
     // LowHPNotifier settings
     public boolean lowHPNotifier = true;

@@ -2,7 +2,9 @@ package com.lemon;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -47,11 +49,14 @@ public class RenderTracker {
         String name = p.getName().getString();
         GameSenseConfig cfg = GameSenseConfig.INSTANCE;
 
-        if (!cfg.notifyRender) return;
+        if (!cfg.renderNotify) return;
 
         if (!cfg.renderBlacklist.isEmpty() && cfg.renderBlacklist.contains(name)) return;
 
-        client.player.sendMessage(Text.of("[GS] " + name + " entered render distance."), false);
+        MutableText msg = Text.literal(name + " entered render distance.")
+                        .styled(style -> style.withColor(GameSenseConfig.INSTANCE.renderFormatting.mcFormat));
+
+        client.player.sendMessage(GameSenseClient.PREFIX.copy().append(msg), false);
     }
 
     private static void onDerender(UUID uuid, MinecraftClient client) {
@@ -61,12 +66,14 @@ public class RenderTracker {
         String name = p.getName().getString();
         GameSenseConfig cfg = GameSenseConfig.INSTANCE;
 
-        if (!cfg.notifyDerender) return;
+        if (!cfg.renderLeaveNotify) return;
 
         if (!cfg.renderBlacklist.isEmpty() && cfg.renderBlacklist.contains(name)) return;
 
-        client.player.sendMessage(Text.of("[GS] " + name + " left render distance."), false);
+        MutableText msg = Text.literal(name + " left render distance.")
+                        .styled(style -> style.withColor(GameSenseConfig.INSTANCE.renderFormatting.mcFormat));
 
+        client.player.sendMessage(GameSenseClient.PREFIX.copy().append(msg), false);
     }
 
 }

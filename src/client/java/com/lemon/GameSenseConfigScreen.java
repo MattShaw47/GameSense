@@ -131,16 +131,16 @@ public class GameSenseConfigScreen {
         // Render Tracker
         ConfigCategory renderTracker = builder.getOrCreateCategory(Text.of("Render Tracker"));
 
-        renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Notify on render"), config.notifyRender)
+        renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Notify on render"), config.renderNotify)
                 .setDefaultValue(true)
                 .setTooltip(Text.of("Sends a chat message when a player enters render distance."))
-                .setSaveConsumer(newValue -> config.notifyRender = newValue)
+                .setSaveConsumer(newValue -> config.renderNotify = newValue)
                 .build());
 
-        renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Notify on de-render"), config.notifyDerender)
+        renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Notify on de-render"), config.renderLeaveNotify)
                 .setDefaultValue(true)
                 .setTooltip(Text.of("Sends a chat message when a player leaves render distance."))
-                .setSaveConsumer(newValue -> config.notifyDerender = newValue)
+                .setSaveConsumer(newValue -> config.renderLeaveNotify = newValue)
                 .build());
 
         renderTracker.addEntry(entryBuilder.startBooleanToggle(Text.of("Highlight rendered in tablist"), config.tablistHighlight)
@@ -159,6 +159,16 @@ public class GameSenseConfigScreen {
                             .filter(s -> !s.isEmpty())
                             .collect(Collectors.toList());
                 }).build());
+
+        renderTracker.addEntry(entryBuilder.startEnumSelector(Text.of("(De)Render notification color."), ColorFormatting.class, config.renderFormatting)
+                .setDefaultValue(ColorFormatting.RED)
+                .setDefaultValue(ColorFormatting.RED)
+                .setSaveConsumer(newValue -> {config.renderFormatting = newValue;})
+                .setEnumNameProvider(c -> {
+                    ColorFormatting color = (ColorFormatting) c;
+                    return Text.literal(color.toString()).styled(s -> s.withColor(color.mcFormat));
+                })
+                .build());
 
         // Armor Swap Notifier
         ConfigCategory armorTracker = builder.getOrCreateCategory(Text.of("Armor Swap Notifier"));
