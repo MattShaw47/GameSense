@@ -2,6 +2,7 @@ package com.lemon;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.util.Formatting;
 
 import java.io.File;
 import java.io.FileReader;
@@ -13,7 +14,6 @@ public class GameSenseConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final File CONFIG_FILE = new File("config/gamesense.json");
 
-    public boolean highlightLowHP = true;
     public boolean showPotionUse = true;
 
     // Render / de-render settings
@@ -24,7 +24,13 @@ public class GameSenseConfig {
 
     // LowHPNotifier settings
     public boolean lowHPNotifier = true;
-    public int lowHPThreshold = 6;
+    public float lowHPThreshold = 6.0f;
+    public boolean lowHPTag = true;
+    public boolean lowHPHighlight = true;
+    public boolean lowHPOnscreenPopup = true;
+    public boolean lowHPMessage = true;
+    public ColorFormatting lowHpFormatting = ColorFormatting.RED;
+    public boolean lowHPIncludeSelf = false;
 
 
     public static GameSenseConfig INSTANCE = load();
