@@ -20,8 +20,11 @@ public class GameSenseConfig {
     public boolean notifyRender = true;
     public boolean notifyDerender = true;
     public boolean tablistHighlight = true;
-
     public List<String> renderBlacklist = new ArrayList<>();
+
+    // LowHPNotifier settings
+    public boolean lowHPNotifier = true;
+    public int lowHPThreshold = 6;
 
 
     public static GameSenseConfig INSTANCE = load();
